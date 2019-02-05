@@ -5,12 +5,12 @@
 version: 2
 
 defaults: &defaults
-  working_directory: ~/repo
+  working_directory: ~/reibo
   docker:
     - image: circleci/node:10.9.0-stretch-browsers
 
 jobs:
-  test:
+  install:
     <<: *defaults
 
     steps:
@@ -28,7 +28,10 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run: # run tests
+    test:
+      <<: *defaults
+
+        - run: # run tests
           name: test
           command: npm test
      # - store_artifacts: # special step to save test results as as artifact
@@ -49,19 +52,25 @@ jobs:
           command: npm build
 
   publish:
-    working_directory: ~/repo
+    <<: *defaults
     docker:
       - image: circleci/<language>:<version TAG>
     steps:
-      - checkout
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - run: npm publish
+      - run: npm run lib:publish
 
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - test
+      - install
+      - test:
+          requires:
+            - install
       - build:
           requires:
+            - install
+      - publish:
+          requires:
             - test
+            - build
