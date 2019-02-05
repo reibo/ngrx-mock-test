@@ -8,6 +8,8 @@
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+<a href="https://twitter.com/reibo_bo"><img src="https://img.shields.io/twitter/follow/reibo_bo.svg?style=social"></a>
+
 ## A library that implements the features described on
 
 [Blog on medium](https://medium.com/@bo.vandersteene/mock-your-ngrx-store-on-the-easy-way-68c66d4bea63)
