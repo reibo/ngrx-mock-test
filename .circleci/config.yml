@@ -31,9 +31,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+            -
     test:
       <<: *defaults
-        - attach_workspace: *attach_options
         - run: # run tests
           name: test
           command: npm test
@@ -50,7 +50,6 @@ jobs:
   build:
     <<: *defaults
     steps:
-      - attach_workspace: *attach_options
       - run: # run tests
           name: test
           command: npm build
@@ -58,7 +57,6 @@ jobs:
   publish:
     <<: *defaults
     docker:
-      - attach_workspace: *attach_options
       - image: circleci/<language>:<version TAG>
     steps:
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
