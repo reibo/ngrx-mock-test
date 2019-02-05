@@ -6,7 +6,7 @@
     "prettier": "prettier --write \"**/*.{js,json,css,md,ts,html,component.html}\"",
     "start": "ng serve",
     "build": "ng build --project @reibo/ngrx-mock-test",
-    "test": "ng test --watch=false",
+    "test": "ng test --watch=false --project ngrx-mock-test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "lib:pack": "ng build --project  @reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test  && npm pack && cd ../../..",

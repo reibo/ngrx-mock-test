@@ -10,7 +10,7 @@ defaults: &defaults
     - image: circleci/node:10.9.0-stretch-browsers
 
 jobs:
-  build:
+  test:
     <<: *defaults
 
     steps:
@@ -44,8 +44,27 @@ jobs:
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results.xml
 
+  build:
+    <<: *defaults
+    steps:
+      - run: # run tests
+          name: test
+          command: npm build
+
+  publish:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/<language>:<version TAG>
+    steps:
+      - checkout
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: npm publish
+
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
+      - test
+      - build:
+          requires:
+            - test
