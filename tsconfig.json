@@ -11,12 +11,11 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
+    "paths": {
+      "@reibo/ngrx-mock-test": ["dist/reibo/ngrx-mock-test", "projects/reibo/ngrx-mock-test/src/public_api.ts"],
+      "@reibo/ngrx-mock-test/*": ["dist/reibo/ngrx-mock-test/*"]
+    }
   }
 }

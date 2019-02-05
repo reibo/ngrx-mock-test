@@ -1,0 +1,7 @@
+<blockquote *ngIf="(quote$ | async) as quote">
+  <span [innerHtml]="quote.content"></span>
+  <footer>{{ quote.title }}</footer>
+</blockquote>
+<pre *ngIf="(error$ | async) as error">
+  {{ error | json }}
+</pre>
