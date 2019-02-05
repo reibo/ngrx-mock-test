@@ -4,10 +4,13 @@
 #
 version: 2
 
-defaults: &defaults
+anchor_1: &defaults
   working_directory: ~/reibo
   docker:
     - image: circleci/node:10.9.0-stretch-browsers
+
+anchor_2: &attach_options
+  at: .
 
 jobs:
   install:
@@ -30,7 +33,7 @@ jobs:
             - ./node_modules
     test:
       <<: *defaults
-
+        - attach_workspace: *attach_options
         - run: # run tests
           name: test
           command: npm test
@@ -47,6 +50,7 @@ jobs:
   build:
     <<: *defaults
     steps:
+      - attach_workspace: *attach_options
       - run: # run tests
           name: test
           command: npm build
@@ -54,6 +58,7 @@ jobs:
   publish:
     <<: *defaults
     docker:
+      - attach_workspace: *attach_options
       - image: circleci/<language>:<version TAG>
     steps:
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
