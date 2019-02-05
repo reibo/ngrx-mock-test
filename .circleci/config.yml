@@ -48,6 +48,4 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build:
-          pre-steps:
-            - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - build
