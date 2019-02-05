@@ -4,8 +4,8 @@
 ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
 [![npm](https://img.shields.io/npm/dt/%40reibo%2Fngrx-mock-test.svg?style=flat-square)](https://www.npmjs.com/package/%40reibo%2Fngrx-mock-test)
 
-[![CircleCI](https://img.shields.io/circleci/project/github/bovandersteene/-reibo-ngrx-mock-test.svg)](https://circleci.com/gh/bovandersteene/-reibo-ngrx-mock-test)
-[![CircleCI](https://img.shields.io/codecov/c/github/bovandersteene/-reibo-ngrx-mock-test.svg)](https://codecov.io/gh/bovandersteene/-reibo-ngrx-mock-test)
+[![CircleCI](https://img.shields.io/circleci/project/github/reibo/ngrx-mock-test.svg)](https://circleci.com/gh/bovandersteene/-reibo-ngrx-mock-test)
+[![CircleCI](https://img.shields.io/codecov/c/github/reibo/ngrx-mock-test.svg)](https://codecov.io/gh/bovandersteene/-reibo-ngrx-mock-test)
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
