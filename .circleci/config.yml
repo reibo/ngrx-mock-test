@@ -35,7 +35,6 @@ jobs:
           name: Build project
           command: npm run build
   deploy:
-    <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
