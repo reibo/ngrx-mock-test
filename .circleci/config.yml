@@ -30,14 +30,11 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      # Install project dependencies
+      # Build project
       - run:
           name: Build project
           command: npm run build
-  deploy:
-    steps:
-      - attach_workspace:
-          at: ~/repo
+      # Publish
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
