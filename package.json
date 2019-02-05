@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "lib:pack": "ng build --project  @reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test  && npm pack && cd ../../..",
-    "lib:publish": "cd dist/reibo/ngrx-mock-test && npm version patch && npm publish --access=public"
+    "lib:publish": "cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test && npm version patch && npm publish --access=public"
   },
   "private": true,
   "dependencies": {
