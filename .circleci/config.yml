@@ -32,10 +32,11 @@ jobs:
           paths:
             - ./node_modules
             -
+
   test:
     <<: *defaults
 
-      steps:
+    steps:
       - run: # run tests
         name: test
         command: npm test
