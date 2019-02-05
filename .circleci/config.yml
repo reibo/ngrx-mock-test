@@ -59,8 +59,6 @@ jobs:
 
   publish:
     <<: *defaults
-    docker:
-      - image: circleci/<language>:<version TAG>
     steps:
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: npm run lib:publish
