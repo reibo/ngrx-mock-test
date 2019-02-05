@@ -10,7 +10,8 @@ defaults: &defaults
     - image: circleci/node:10.9.0-stretch-browsers
 
 default-steps: &steps
-  - checkout
+  steps:
+    - checkout
 
     # Download and cache dependencies
     - restore_cache:
