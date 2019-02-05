@@ -14,35 +14,35 @@ jobs:
     <<: *defaults
 
     steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      # Log the current branch
+      - checkout # special step to check out source code to working directory
       - run:
-          name: Show current branch
-          command: echo ${CIRCLE_BRANCH}
-      # Install project dependencies
+        name: update-npm
+        command: 'sudo npm install -g npm@latest'
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: install local deps
+          name: install-npm-wee
           command: npm install
-      - save_cache:
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      # Build project
-      - run:
-          name: Build project
-          command: npm run build
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Publish package
-          command: npm run lib:publish
+            - ./node_modules
+      - run: # run tests
+          name: test
+          command: npm test
+      - run: # run coverage report
+          name: code-coverage
+          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      - store_artifacts: # special step to save test results as as artifact
+          # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: test-results.xml
+          prefix: tests
+      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: coverage
+          prefix: coverage
+      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test-results.xml
 
 workflows:
   version: 2
