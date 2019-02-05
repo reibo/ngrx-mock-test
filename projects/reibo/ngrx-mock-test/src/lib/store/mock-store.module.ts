@@ -19,11 +19,10 @@ export function initReducer(featureName: string, initialState: unknown) {
   };
 }
 
+// @dynamic
 @NgModule({
   imports: [StoreModule.forRoot(reducers, { metaReducers }), EffectsModule.forRoot([MockEffect])],
-  exports: {
-    StoreModule,
-  },
+  exports: [StoreModule],
 })
 export class MockStoreModule {
   static forRoot(featureName: string, initialState: unknown): ModuleWithProviders {
