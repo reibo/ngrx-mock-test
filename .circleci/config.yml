@@ -60,10 +60,14 @@ jobs:
   prod-publish:
     <<: *defaults
     steps:
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: # run tests
+          name: pre-publish-build
+          command: npm build
       - run: # run tests
           name: pre-publish
           command: cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test
-     # - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+     #
      # - run: npm run lib:publish
 
 workflows:
