@@ -62,7 +62,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-          - restore_cache:
+      - restore_cache:
           name: Restore node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
       - restore_cache:
