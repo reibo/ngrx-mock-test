@@ -62,7 +62,7 @@ jobs:
     steps:
       - run: # run tests
           name: pre-publish
-          command: npm build
+          command: cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test
      # - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
      # - run: npm run lib:publish
 
