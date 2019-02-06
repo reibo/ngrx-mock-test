@@ -74,7 +74,7 @@ jobs:
           key: node_modules-{{ checksum "package-lock.json" }}
       - run: # run tests
           name: build
-          command: npm build
+          command: npm run build
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: pre-publish
