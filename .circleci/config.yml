@@ -80,7 +80,7 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: pre-publish
-          command: cp README.md /tmp/reibo/dist/reibo/ngrx-mock-test && cd /tmp/reibo/dist/reibo/ngrx-mock-test
+          command: cp README.md /tmp/reibo/dist/reibo/ngrx-mock-test/README.md && cd /tmp/reibo/dist/reibo/ngrx-mock-test
       - run:
           name: patch
           command: npm version patch
