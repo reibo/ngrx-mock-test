@@ -5,7 +5,7 @@
 version: 2
 
 anchor_1: &defaults
-  working_directory: ~/reibo
+  working_directory: /tmp/reibo
   docker:
     - image: circleci/node:10.9.0-stretch-browsers
 
@@ -35,6 +35,7 @@ jobs:
 
   test:
     <<: *defaults
+
     steps:
       - run: # run tests
           name: test
@@ -52,23 +53,13 @@ jobs:
   build:
     <<: *defaults
     steps:
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: build-{{ checksum "package.json" }}
       - run: # run tests
           name: test
           command: npm build
-     - save_cache: # special step to save the dependency cache
-          key: build-{{ checksum "package.json" }}
-          paths:
-             - ./dist
 
   publish:
     <<: *defaults
     steps:
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: build-{{ checksum "package.json" }}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: npm run lib:publish
 
@@ -77,9 +68,9 @@ workflows:
   build-deploy:
     jobs:
       - install
-      #- test:
-       #  requires:
-            #- install
+     # - test:
+      #    requires:
+     #       - install
       - build:
           requires:
             - install
