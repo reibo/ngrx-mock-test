@@ -16,14 +16,46 @@
 
 ## Use this library
 
-Just run
+full example on [stackblitz](https://test-ngrx-store-with-npm-dep.stackblitz.io) or in the [src](src) folder
+
+### Install the npm dependency
+
+`npm i @reibo/ngrx-mock-test -d`, or if you preffer yarn `yarn add @reibo/ngrx-mock-test -d`
+
+### Initialize the Mock store in your project
+
+The purpose of this mock store is to use it on feature based stores.
+
+You will provide the data in the store like you decide, so it is ideal to test with mocked data.
+
+In the MockStoreModule in your Testbed imports with your feature name and an initial state.
 
 ```
-npm i @reibo/ngrx-mock-test -d
+beforeEach(async(() => {
+ TestBed.configureTestingModule({
+   imports: [ MockStoreModule.forRoot('feature_name', initialState)],
+   ...
+ }).compileComponents();
+}));
 ```
 
-If you prefer yarn
+Next get store out of the testbed
 
 ```
-yarn add @reibo/ngrx-mock-test -d
+store = TestBed.get(Store);
+```
+
+Change the state in your test during testing with the mock
+
+```
+store.dispatch(new MockAction({ name: "foo" }));
+```
+
+Do you like to work with streams and you us marble testing?
+
+Try out:
+
+```
+const inputStream = m.hot('-a-b-a', stream);
+store.dispatch(new MockStream(inputStream));
 ```

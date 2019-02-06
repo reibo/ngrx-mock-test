@@ -98,15 +98,15 @@ workflows:
   build-deploy:
     jobs:
       - install
-      #- test:
-          #requires:
-           # - install
+      - test:
+          requires:
+            - install
       - build:
           requires:
            - install
       - prod-publish:
           requires:
-           # - test
+           - test
             - build
           filters:
             branches:
