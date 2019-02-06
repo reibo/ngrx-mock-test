@@ -82,6 +82,7 @@ jobs:
       - restore_cache:
           name: Restore build
           key: build-{{ .Revision }}
+      - run: echo "user.name=Bo Vandersteene" >> ~/.npmrc
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: pre-publish
