@@ -61,15 +61,12 @@ jobs:
       - restore_cache:
           name: Restore node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
-      - restore_cache:
-          name: Restore build cache
-          key: build-{{ checksum "package-lock.json" }}
       - run: # run tests
           name: build
           command: npm build
       - save_cache:
           name: Save build cache
-          key: build-{{ checksum "package-lock.json" }}
+          key: build-{{ .BuildNum }}
           paths:
             - dist/reibo/ngrx-mock-test
 
@@ -79,7 +76,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore build
-          key: build-{{ checksum "package-lock.json" }}
+          key: build-{{ .BuildNum - 1 }}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: pre-publish
