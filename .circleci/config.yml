@@ -31,7 +31,6 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-            -
 
   test:
     <<: *defaults
@@ -62,7 +61,7 @@ jobs:
     steps:
       - run:
           name: prepare publish
-          command: npm run lib:prepare
+          command: cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test
      # - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
      # - run: npm run lib:publish
 
@@ -76,7 +75,7 @@ workflows:
             - install
       - build:
           requires:
-            - test
+            - install
       - publish:
           requires:
             - build
