@@ -68,12 +68,12 @@ workflows:
   build-deploy:
     jobs:
       - install
-     # - test:
-      #    requires:
-     #       - install
-      - build:
+      - test:
           requires:
             - install
+      - build:
+          requires:
+            - test
       - publish:
           requires:
           #  - test
