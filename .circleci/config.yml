@@ -106,7 +106,7 @@ workflows:
            - install
       - prod-publish:
           requires:
-           - test
+            - test
             - build
           filters:
             branches:
