@@ -64,23 +64,21 @@ jobs:
       - run: # run tests
           name: build
           command: npm build
-      - save_cache:
-          name: Save build cache
-          key: build-{{ .Revision }}
-          paths:
-            - dist/reibo/ngrx-mock-test
 
   prod-publish:
     <<: *defaults
     steps:
       - checkout
       - restore_cache:
-          name: Restore build
-          key: build-{{ .Revision }}
+          name: Restore node modules cache
+          key: node_modules-{{ checksum "package-lock.json" }}
+      - run: # run tests
+          name: build
+          command: npm build
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: pre-publish
-          command: cp README.md /tmp/reibo/dist/reibo/ngrx-mock-test/README.md && cd /tmp/reibo/dist/reibo/ngrx-mock-test
+          command: cp README.md /dist/reibo/ngrx-mock-test/README.md && cd dist/reibo/ngrx-mock-test
       - run:
           name: patch
           command: npm version patch
@@ -98,13 +96,13 @@ workflows:
       #- test:
           #requires:
            # - install
-      - build:
-          requires:
-            - install
+      #- build:
+        #  requires:
+         #   - install
       - prod-publish:
           requires:
            # - test
-            - build
+            - install
           filters:
             branches:
               only: master
