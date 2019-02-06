@@ -60,8 +60,9 @@ jobs:
   publish:
     <<: *defaults
     steps:
-      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - run: npm run lib:publish
+      - run: npm run lib:prepare
+     # - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+     # - run: npm run lib:publish
 
 workflows:
   version: 2

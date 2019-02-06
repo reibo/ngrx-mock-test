@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "lib:pack": "ng build --project  @reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test  && npm pack && cd ../../..",
-    "lib:publish": "cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test"
+    "lib:prepare": "cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test",
+    "lib:publish": "cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test && npm version patch && npm publish --access=public --registry=https://registry.npmjs.org/"
   },
   "private": true,
   "dependencies": {
