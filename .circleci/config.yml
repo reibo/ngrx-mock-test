@@ -7,10 +7,8 @@ version: 2
 anchor_1: &defaults
   working_directory: /tmp/reibo
   docker:
-    - image: circleci/node:10.9.0-stretch-browsers
+    - image: circleci/node:chakracore-8-browsers-legacy
 
-anchor_2: &attach_options
-  at: .
 
 jobs:
   install:
