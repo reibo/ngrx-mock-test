@@ -38,9 +38,12 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache:
+          - restore_cache:
           name: Restore node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          name: Restore build
+          key: build-{{ .Revision }}
       - run: # run tests
           name: test
           command: npm test
@@ -59,9 +62,20 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache:
+          - restore_cache:
           name: Restore node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          name: Restore build
+          key: build-{{ .Revision }}
+      - run:
+          name: Create the build
+          command: npm run build
+      - save_cache:
+          name: Save build
+          key: node_modules-{{ .Revision  }}
+          paths:
+            - node_modules
       - run: # run tests
           name: build
           command: npm build
@@ -71,15 +85,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          name: Restore node modules cache
-          key: node_modules-{{ checksum "package-lock.json" }}
-      - run: # run tests
-          name: build
-          command: npm run build
+          name: Restore build
+          key: build-{{ .Revision }}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: pre-publish
-          command: cp README.md /dist/reibo/ngrx-mock-test/README.md && cd dist/reibo/ngrx-mock-test
+          command: cp README.md dist/reibo/ngrx-mock-test/README.md && cd dist/reibo/ngrx-mock-test
       - run:
           name: patch
           command: npm version patch
@@ -97,13 +108,13 @@ workflows:
       #- test:
           #requires:
            # - install
-      #- build:
-        #  requires:
-         #   - install
+      - build:
+          requires:
+           - install
       - prod-publish:
           requires:
            # - test
-            - install
+            - build
           filters:
             branches:
               only: master
