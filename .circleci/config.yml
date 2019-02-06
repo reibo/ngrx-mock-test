@@ -37,7 +37,7 @@ jobs:
     steps:
       - run: # run tests
           name: test
-          command: npm build
+          command: npm test
 
           # - store_artifacts: # special step to save test results as as artifact
           # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
@@ -81,7 +81,13 @@ workflows:
       - build:
           requires:
             - install
+          filters:
+            branches:
+              ignore:
+                - master
       - prod-publish:
           requires:
-            - build
             - test
+          filters:
+            branches:
+              only: master
