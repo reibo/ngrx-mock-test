@@ -25,9 +25,6 @@ jobs:
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: node_modules-{{ checksum "package-lock.json" }}
       - run:
-          name: install ng
-          command: npm i @angular/cli
-      - run:
           name: install-npm-wee
           command: npm install
       - save_cache: # special step to save the dependency cache
@@ -66,7 +63,7 @@ jobs:
       - run: # run tests
           name: build
           command: npm build
-      - save_cache: # special step to save the dependency cache
+      - save_cache:
           name: Save build
           key: build-cache-{{ checksum "package-lock.json" }}
           paths:
@@ -75,11 +72,11 @@ jobs:
   prod-publish:
     <<: *defaults
     steps:
-      - restore_cache: # special step to save the dependency cache
+      - restore_cache:
           name: restore save build
           key: build-cache-{{ checksum "package-lock.json" }}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - run: # run tests
+      - run:
           name: pre-publish
           command: cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test
       - run:
