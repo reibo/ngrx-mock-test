@@ -56,12 +56,13 @@ jobs:
           name: build
           command: npm build
 
+
   publish:
     <<: *defaults
     steps:
-      - run:
-          name: prepare publish
-          command: cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test
+      - run: # run tests
+          name: build
+          command: npm build
      # - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
      # - run: npm run lib:publish
 
@@ -76,6 +77,7 @@ workflows:
       - build:
           requires:
             - install
-      - publish:
+      - prod-publish:
           requires:
             - build
+            - test
