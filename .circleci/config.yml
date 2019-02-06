@@ -73,6 +73,7 @@ jobs:
   prod-publish:
     <<: *defaults
     steps:
+      - checkout
       - restore_cache:
           name: Restore build
           key: build-{{ checksum "package-lock.json" }}
