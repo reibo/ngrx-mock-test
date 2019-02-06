@@ -57,11 +57,11 @@ jobs:
           command: npm build
 
 
-  publish:
+  prod-publish:
     <<: *defaults
     steps:
       - run: # run tests
-          name: build
+          name: pre-publish
           command: npm build
      # - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
      # - run: npm run lib:publish
