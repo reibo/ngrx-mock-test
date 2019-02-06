@@ -23,18 +23,22 @@ jobs:
           command: 'sudo npm install -g npm@latest'
       - restore_cache: # special step to restore the dependency cache
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: node_modules-{{ checksum "package-lock.json" }}
       - run:
           name: install-npm-wee
           command: npm install
       - save_cache: # special step to save the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: node_modules-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
 
   test:
     <<: *defaults
     steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules cache
+          key: node_modules-{{ checksum "package-lock.json" }}
       - run: # run tests
           name: test
           command: npm test
@@ -52,14 +56,25 @@ jobs:
   build:
     <<: *defaults
     steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules cache
+          key: node_modules-{{ checksum "package-lock.json" }}
       - run: # run tests
           name: build
           command: npm build
-
+      - save_cache: # special step to save the dependency cache
+          name: Save build
+          key: build-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./dist
 
   prod-publish:
     <<: *defaults
     steps:
+      - restore_cache: # special step to save the dependency cache
+          name: restore save build
+          key: build-cache-{{ checksum "package-lock.json" }}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: # run tests
           name: pre-publish-build
@@ -81,13 +96,10 @@ workflows:
       - build:
           requires:
             - install
-          filters:
-            branches:
-              ignore:
-                - master
       - prod-publish:
           requires:
             - test
+            - build
           filters:
             branches:
               only: master
