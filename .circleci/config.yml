@@ -75,10 +75,7 @@ jobs:
           name: Save build
           key: node_modules-{{ .Revision  }}
           paths:
-            - node_modules
-      - run: # run tests
-          name: build
-          command: npm build
+            - dist/reibo/ngrx-mock-test
 
   prod-publish:
     <<: *defaults
