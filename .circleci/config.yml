@@ -88,9 +88,6 @@ jobs:
           name: pre-publish
           command: cp README.md dist/reibo/ngrx-mock-test/README.md && cd dist/reibo/ngrx-mock-test
       - run:
-          name: patch
-          command: npm version patch
-      - run:
           name: publish
           command: npm publish --access=public --registry=https://registry.npmjs.org/
      #
