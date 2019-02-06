@@ -57,10 +57,17 @@ jobs:
       - run: # run tests
           name: test
           command: npm build
+     - save_cache: # special step to save the dependency cache
+          key: build-{{ checksum "package.json" }}
+          paths:
+             - ./dist
 
   publish:
     <<: *defaults
     steps:
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: build-{{ checksum "package.json" }}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: npm run lib:publish
 
