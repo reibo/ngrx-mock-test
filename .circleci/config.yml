@@ -35,7 +35,6 @@ jobs:
 
   test:
     <<: *defaults
-
     steps:
       - run: # run tests
           name: test
