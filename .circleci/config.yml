@@ -18,15 +18,16 @@ jobs:
 
     steps:
       - checkout # special step to check out source code to working directory
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
       - restore_cache:
           name: Restore node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
       - run:
-          name: install-npm-wee
-          command: npm install
+          name: Install dependencies
+          command: |
+            if [ ! -d node_modules ]; then
+              sudo npm install -g npm@$NPM_VERSION
+              npm ci
+            fi
       - save_cache:
           name: Save node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
