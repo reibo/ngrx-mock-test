@@ -37,7 +37,6 @@ jobs:
     <<: *defaults
 
     steps:
-      - checkout # special step to check out source code to working directory
       - run: # run tests
           name: test
           command: npm test
@@ -76,13 +75,13 @@ workflows:
   build-deploy:
     jobs:
       - install
-      - test:
-         requires:
-            - install
+      #- test:
+       #  requires:
+            #- install
       - build:
           requires:
             - install
       - publish:
           requires:
-            - test
+          #  - test
             - build
