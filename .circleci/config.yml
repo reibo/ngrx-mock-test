@@ -21,16 +21,17 @@ jobs:
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - restore_cache:
+          name: Restore node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
       - run:
           name: install-npm-wee
           command: npm install
-      - save_cache: # special step to save the dependency cache
+      - save_cache:
+          name: Save node modules cache
           key: node_modules-{{ checksum "package-lock.json" }}
           paths:
-            - ./node_modules
+            - node_modules
 
   test:
     <<: *defaults
@@ -59,22 +60,22 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore node modules cache
-            key: node_modules-{{ checksum "package-lock.json" }}
+          key: node_modules-{{ checksum "package-lock.json" }}
       - run: # run tests
           name: build
           command: npm build
       - save_cache:
-          name: Save build
-          key: build-cache-{{ checksum "package-lock.json" }}
+          name: Save build cache
+          key: build-{{ checksum "package-lock.json" }}
           paths:
-            - ./dist
+            - dist
 
   prod-publish:
     <<: *defaults
     steps:
       - restore_cache:
-          name: restore save build
-          key: build-cache-{{ checksum "package-lock.json" }}
+          name: Restore build
+          key: build-{{ checksum "package-lock.json" }}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: pre-publish
