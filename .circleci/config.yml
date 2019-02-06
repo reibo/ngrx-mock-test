@@ -89,7 +89,7 @@ jobs:
           command: cp README.md dist/reibo/ngrx-mock-test/README.md && cd dist/reibo/ngrx-mock-test
       - run:
           name: publish
-          command: npm publish --access=public --registry=https://registry.npmjs.org/
+          command: npm publish --access=public --registry=https://registry.npmjs.org/ --folder dist/reibo/ngrx-mock-test
      #
      # - run: npm run lib:publish
 
