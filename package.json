@@ -9,9 +9,7 @@
     "test": "ng test --code-coverage --watch=false --project ngrx-mock-test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "lib:pack": "ng build --project  @reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test  && npm pack && cd ../../..",
-    "lib:prepare": "cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test",
-    "lib:publish": "cp README.md dist/reibo/ngrx-mock-test && cd dist/reibo/ngrx-mock-test && npm publish --access=public --registry=https://registry.npmjs.org/"
+    "lib:patch": "cd projects/reibo/ngrx-mock-test && npm version patch && cd ../../.."
   },
   "private": true,
   "dependencies": {
