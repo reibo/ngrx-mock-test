@@ -7,7 +7,7 @@ version: 2
 anchor_1: &defaults
   working_directory: /tmp/reibo
   docker:
-    - image: circleci/node:chakracore-8-browsers-legacy
+    - image: circleci/node:10.9.0-stretch-browsers
 
 
 jobs:
@@ -71,7 +71,7 @@ jobs:
           command: npm run build
       - save_cache:
           name: Save build
-          key: node_modules-{{ .Revision  }}
+          key: build-{{ .Revision }}
           paths:
             - dist/reibo/ngrx-mock-test
 
